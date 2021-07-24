@@ -18,7 +18,8 @@ st.write('## Tune Hyperparameters')
 st.write('## Graph')
 
 def plot_series(time, series, format="-", start=0, end=None, label=None):
-    fig = plt.plot(time[start:end], series[start:end], format, label=label)
+    fig = plt.figure()
+    plt.plot(time[start:end], series[start:end], format, label=label)
     plt.xlabel("Time")
     plt.ylabel("Value")
     plt.grid(True)
