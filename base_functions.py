@@ -1,6 +1,8 @@
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import streamlit as st
+
 # functions
 def plot_series(time, series, tic_symbol, format="-", start=0, end=None, label=None):
     fig = plt.figure(figsize=(10, 6))
