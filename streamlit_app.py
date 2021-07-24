@@ -13,8 +13,9 @@ import base_functions
 keras = tf.keras
 
 st.title('Stock Forecasting')
-
-st.write('## Select Ticker Symbol')
+tic_option = st.selectbox(
+    '## Select Ticker Symbol',
+    ('GOOG','AAPL'))
 
 option = st.selectbox(
     'Select Forcasting Algorithm',
@@ -37,8 +38,11 @@ conn = connect()
 def run_query(query):
     rows = conn.execute(query, headers=1)
     return rows
+if tic_option == 'GOOG':
+    sheet_url = st.secrets["gsheets_url_goog"]
+else:
+    sheet_url = st.secrets["gsheets_url_aapl"]
 
-sheet_url = st.secrets["gsheets_url_goog"]
 rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
 dates = []
@@ -47,4 +51,4 @@ for row in rows:
   dates.append(row.Date)
   prices.append(row.Close)
 
-base_functions.plot_series(dates, prices, 'GOOG')
+base_functions.plot_series(dates, prices, tic_option)
