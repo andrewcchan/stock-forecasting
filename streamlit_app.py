@@ -64,7 +64,7 @@ naive_forecast = prices[split_time - 1:-1]
 fig = plt.figure(figsize=(10, 6))
 plt.plot(time_valid[0:150], x_valid[0:150], label='Series')
 plt.plot(time_valid[1:151], naive_forecast[1:151], label='Forecast')
-
+plt.legend(fontsize=14)
 plt.xlabel("Date")
 plt.ylabel("Closing Price")
 title = tic_option + ' 1 Year Closing Price'
