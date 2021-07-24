@@ -6,7 +6,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from gsheetsdb import connect
-import base_functions.plot_series as plot_series
+import base_functions
 
 # APP
 
@@ -47,4 +47,4 @@ for row in rows:
   dates.append(row.Date)
   prices.append(row.Close)
 
-plot_series(dates, prices, 'GOOG')
+base_functions.plot_series(dates, prices, 'GOOG')
