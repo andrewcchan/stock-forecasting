@@ -51,7 +51,6 @@ for row in rows:
   dates.append(row.Date)
   prices.append(row.Close)
 
-base_functions.plot_series(dates, prices, tic_option)
 
 split_time = 200
 time_train = dates[:split_time]
@@ -63,6 +62,13 @@ x_valid = prices[split_time:]
 naive_forecast = prices[split_time - 1:-1]
 
 fig = plt.figure(figsize=(10, 6))
-base_functions.plot_series(time_valid, x_valid, start=0, end=150, label="Series")
-base_functions.plot_series(time_valid, naive_forecast, start=1, end=151, label="Forecast")
+plt.plot(time_valid[0:150], x_valid[0:150], format, label='Series')
+plt.plot(time_valid[1:151], naive_forecast[1:151], format, label='Forecast')
+
+plt.xlabel("Date")
+plt.ylabel("Closing Price")
+title = tic_option + ' 1 Year Closing Price'
+plt.title(title)
+plt.grid(True)
+
 st.pyplot(fig)
