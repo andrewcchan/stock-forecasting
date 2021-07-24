@@ -14,7 +14,7 @@ keras = tf.keras
 
 st.title('Stock Forecasting')
 tic_option = st.selectbox(
-    '## Select Ticker Symbol',
+    'Select Ticker Symbol',
     ('GOOG','AAPL'))
 
 option = st.selectbox(
@@ -52,3 +52,17 @@ for row in rows:
   prices.append(row.Close)
 
 base_functions.plot_series(dates, prices, tic_option)
+
+split_time = 200
+time_train = dates[:split_time]
+x_train = prices[:split_time]
+time_valid = dates[split_time:]
+x_valid = prices[split_time:]
+
+
+naive_forecast = prices[split_time - 1:-1]
+
+fig = plt.figure(figsize=(10, 6))
+base_functions.plot_series(time_valid, x_valid, start=0, end=150, label="Series")
+base_functions.plot_series(time_valid, naive_forecast, start=1, end=151, label="Forecast")
+st.pyplot(fig)
