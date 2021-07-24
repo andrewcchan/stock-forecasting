@@ -11,7 +11,11 @@ st.title('Stock Forecasting')
 
 st.write('## Select Ticker Symbol')
 
-st.write('## Select Forecasting Algo')
+option = st.selectbox(
+    'Select Forcasting Algorithm',
+    ('Naive', 'Difference+Moving Average', 'RNN'))
+
+st.write('You selected:', option)
 
 st.write('## Tune Hyperparameters')
 
