@@ -18,12 +18,11 @@ st.write('## Tune Hyperparameters')
 st.write('## Graph')
 
 def plot_series(time, series, format="-", start=0, end=None, label=None):
-    plt.plot(time[start:end], series[start:end], format, label=label)
+    fig = plt.plot(time[start:end], series[start:end], format, label=label)
     plt.xlabel("Time")
     plt.ylabel("Value")
-    if label:
-        plt.legend(fontsize=14)
     plt.grid(True)
+    st.pyplot(fig)
     
 def trend(time, slope=0):
     return slope * time
@@ -55,6 +54,4 @@ noise = white_noise(time, noise_level, seed=42)
 
 series += noise
 
-plt.figure(figsize=(10, 6))
 plot_series(time, series)
-plt.show()
