@@ -62,8 +62,8 @@ x_valid = prices[split_time:]
 naive_forecast = prices[split_time - 1:-1]
 
 fig = plt.figure(figsize=(10, 6))
-plt.plot(time_valid[0:150], x_valid[0:150], format, label='Series')
-plt.plot(time_valid[1:151], naive_forecast[1:151], format, label='Forecast')
+plt.plot(time_valid[0:150], x_valid[0:150], label='Series')
+plt.plot(time_valid[1:151], naive_forecast[1:151], label='Forecast')
 
 plt.xlabel("Date")
 plt.ylabel("Closing Price")
