@@ -32,7 +32,8 @@ def plot_series(time, series, tic_symbol, format="-", start=0, end=None, label=N
     plt.plot(time[start:end], series[start:end], format, label=label)
     plt.xlabel("Date")
     plt.ylabel("Closing Price")
-    plt.title(tic_symbol,'1 Year Closing Price')
+    title = tic_symbol + '1 Year Closing Price'
+    plt.title(title)
     plt.grid(True)
     st.pyplot(fig)
     
