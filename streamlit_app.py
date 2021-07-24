@@ -7,23 +7,8 @@ import matplotlib.pyplot as plt
 import tensorflow as tf
 from gsheetsdb import connect
 
-# LOAD DATA
-# Create a connection object.
-conn = connect()
 
-# Perform SQL query on the Google Sheet.
-# Uses st.cache to only rerun when the query changes or after 10 min.
-@st.cache(ttl=600)
-def run_query(query):
-    rows = conn.execute(query, headers=1)
-    return rows
 
-sheet_url = st.secrets["gsheets_url"]
-rows = run_query(f'SELECT * FROM "{sheet_url}"')
-
-# Print results.
-for row in rows:
-    st.write(f"Date: {row.Date}, Close:{row.Close}:")
 # APP
 
 keras = tf.keras
@@ -42,11 +27,12 @@ st.write('## Tune Hyperparameters')
 
 st.write('## Graph')
 
-def plot_series(time, series, format="-", start=0, end=None, label=None):
+def plot_series(time, series, tic_symbol, format="-", start=0, end=None, label=None):
     fig = plt.figure(figsize=(10, 6))
     plt.plot(time[start:end], series[start:end], format, label=label)
-    plt.xlabel("Time")
-    plt.ylabel("Value")
+    plt.xlabel("Date")
+    plt.ylabel("Closing Price")
+    plt.title(tic_symbol,'1 Year Closing Price')
     plt.grid(True)
     st.pyplot(fig)
     
@@ -68,16 +54,27 @@ def white_noise(time, noise_level=1, seed=None):
     rnd = np.random.RandomState(seed)
     return rnd.randn(len(time)) * noise_level
 
-time = np.arange(4 * 365 + 1)
 
-slope = 0.05
-baseline = 10
-amplitude = 40
-series = baseline + trend(time, slope) + seasonality(time, period=365, amplitude=amplitude)
 
-noise_level = 5
-noise = white_noise(time, noise_level, seed=42)
 
-series += noise
+# LOAD DATA
+# Create a connection object.
+conn = connect()
 
-plot_series(time, series)
+# Perform SQL query on the Google Sheet.
+# Uses st.cache to only rerun when the query changes or after 10 min.
+@st.cache(ttl=600)
+def run_query(query):
+    rows = conn.execute(query, headers=1)
+    return rows
+
+sheet_url = st.secrets["gsheets_url"]
+rows = run_query(f'SELECT * FROM "{sheet_url}"')
+
+dates = []
+prices = []
+for row in rows:
+  dates.append(row.Date)
+  prices.append(row.Close)
+
+plot_series(dates, prices, 'GOOG')
