@@ -83,10 +83,10 @@ st.pyplot(fig)
 
 metric_res = keras.metrics.mean_absolute_error(x_valid, naive_forecast).numpy()
 
-st.write(```
+"""
          ## Metrics
          Compare metrics between different forecasting methods
-         ```)
+"""
 d = {'Metric Name':[],'Mean Absolute Error':[]}
 df = pd.DataFrame(data = d)
 
