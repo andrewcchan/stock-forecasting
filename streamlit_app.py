@@ -17,11 +17,11 @@ tic_option = st.selectbox(
     'Select Ticker Symbol',
     ('GOOG','AAPL'))
 
-option = st.selectbox(
+option_fore = st.selectbox(
     'Select Forcasting Algorithm',
     ('Naive', 'Difference+Moving Average', 'RNN'))
 
-st.write('You selected:', option)
+st.write('You selected:', option_fore)
 
 st.write('## Tune Hyperparameters')
 
@@ -58,9 +58,10 @@ x_train = prices[:split_time]
 time_valid = dates[split_time:]
 x_valid = prices[split_time:]
 
-
+# PERFORM ML ALGO
 naive_forecast = prices[split_time - 1:-1]
 
+# PLOT
 fig = plt.figure(figsize=(10, 6))
 plt.plot(time_valid[0:365], x_valid[0:365], label='Series')
 plt.plot(time_valid[1:366], naive_forecast[1:366], label='Forecast')
@@ -68,7 +69,28 @@ plt.legend(fontsize=14)
 plt.xlabel("Date")
 plt.ylabel("Closing Price")
 title = tic_option + ' 1 Year Closing Price'
+# https://stackoverflow.com/a/15067854
+ax = plt.gca()
+# Rotate the tick labels and set their alignment.
+plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+         rotation_mode="anchor")
 plt.title(title)
 plt.grid(True)
-
 st.pyplot(fig)
+
+
+# DISPLAY METRICS
+
+metric_res = keras.metrics.mean_absolute_error(x_valid, naive_forecast).numpy()
+
+st.write(```
+         ## Metrics
+         Compare metrics between different forecasting methods
+         ```)
+d = {'Metric Name':[],'Mean Absolute Error':[]}
+df = pd.DataFrame(data = d)
+
+df2 = pd.DataFrame([[option_fore,metric_res]],columns=['Metric Name','Mean Absolute Error'])
+df.append(df2)
+
+st.write(df)
