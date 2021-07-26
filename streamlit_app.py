@@ -96,6 +96,7 @@ option_fore
 
 metric_res
 
+df2
 
 df.append(df2)
 
