@@ -90,7 +90,7 @@ metric_res = keras.metrics.mean_absolute_error(x_valid, naive_forecast).numpy()
 d = {'Metric Name':[],'Mean Absolute Error':[]}
 df = pd.DataFrame(data = d)
 
-df2 = pd.DataFrame([[option_fore,metric_res]],columns=['Metric Name','Mean Absolute Error'])
+df2 = pd.DataFrame([[1,2]],columns=['Metric Name','Mean Absolute Error'])
 
 option_fore
 
