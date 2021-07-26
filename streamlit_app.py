@@ -91,6 +91,12 @@ d = {'Metric Name':[],'Mean Absolute Error':[]}
 df = pd.DataFrame(data = d)
 
 df2 = pd.DataFrame([[option_fore,metric_res]],columns=['Metric Name','Mean Absolute Error'])
+
+option_fore
+
+metric_res
+
+
 df.append(df2)
 
 st.write(df)
