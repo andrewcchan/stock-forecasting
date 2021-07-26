@@ -87,17 +87,14 @@ metric_res = keras.metrics.mean_absolute_error(x_valid, naive_forecast).numpy()
          ## Metrics
          Compare metrics between different forecasting methods
 """
+
+st.write('For selected option: ',option_fore, 'MAE is ', metric_res)
+
 d = {'Metric Name':[],'Mean Absolute Error':[]}
 df = pd.DataFrame(data = d)
 
-df2 = pd.DataFrame([[1,2]],columns=['Metric Name','Mean Absolute Error'])
+df2 = pd.DataFrame([[option_fore,metric_res]],columns=['Metric Name','Mean Absolute Error'])
 
-option_fore
-
-metric_res
-
-df2
-
-df.append(df2)
+df = df.append(df2)
 
 st.write(df)
