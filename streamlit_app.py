@@ -19,7 +19,7 @@ tic_option = st.selectbox(
 
 option_fore = st.selectbox(
     'Select Forcasting Algorithm',
-    ('Naive', 'Difference+Moving Average', 'RNN'))
+    ('Naive', 'Difference_Moving_Average', 'RNN'))
 
 st.write('You selected:', option_fore)
 
@@ -58,30 +58,58 @@ x_train = prices[:split_time]
 time_valid = dates[split_time:]
 x_valid = prices[split_time:]
 
-# PERFORM ML ALGO
-naive_forecast = prices[split_time - 1:-1]
+if option_fore == 'Naive':
 
-# PLOT
-fig = plt.figure(figsize=(10, 6))
-plt.plot(time_valid[0:365], x_valid[0:365], label='Series')
-plt.plot(time_valid[1:366], naive_forecast[1:366], label='Forecast')
-plt.legend(fontsize=14)
-plt.xlabel("Date")
-plt.ylabel("Closing Price")
-title = tic_option + ' 1 Year Closing Price'
-# https://stackoverflow.com/a/15067854
-ax = plt.gca()
-# Rotate the tick labels and set their alignment.
-plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
-         rotation_mode="anchor")
-plt.title(title)
-plt.grid(True)
-st.pyplot(fig)
+    # PERFORM ML ALGO
+    naive_forecast = prices[split_time - 1:-1]
+    forecast = naive_forecast
+    # PLOT
+    fig = plt.figure(figsize=(10, 6))
+    plt.plot(time_valid[0:365], x_valid[0:365], label='Series')
+    plt.plot(time_valid[1:366], naive_forecast[1:366], label='Forecast')
+    plt.legend(fontsize=14)
+    plt.xlabel("Date")
+    plt.ylabel("Closing Price")
+    title = tic_option + ' 1 Year Closing Price'
+    # https://stackoverflow.com/a/15067854
+    ax = plt.gca()
+    # Rotate the tick labels and set their alignment.
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+            rotation_mode="anchor")
+    plt.title(title)
+    plt.grid(True)
+    st.pyplot(fig)
+elif option_fore == 'Difference_Moving_Average':
+    # PERFORM ML ALGO
+    time = np.array(dates)
+    series = np.array(prices)
+    diff_series = (series[365:] - series[:-365])
+    diff_moving_avg = base_functions.moving_average_forecast(diff_series, 50)[split_time - 365 - 50:]
+    diff_moving_avg_plus_past = series[split_time - 365:-365] + diff_moving_avg
+
+    forecast = diff_moving_avg_plus_past
+
+    # PLOT
+    fig = plt.figure(figsize=(10, 6))
+    plt.plot(time_valid[0:365], x_valid[0:365], label='Series')
+    plt.plot(time_valid[1:366], forecast[1:366], label='Forecast')
+    plt.legend(fontsize=14)
+    plt.xlabel("Date")
+    plt.ylabel("Closing Price")
+    title = tic_option + ' 1 Year Closing Price'
+    # https://stackoverflow.com/a/15067854
+    ax = plt.gca()
+    # Rotate the tick labels and set their alignment.
+    plt.setp(ax.get_xticklabels(), rotation=45, ha="right",
+            rotation_mode="anchor")
+    plt.title(title)
+    plt.grid(True)
+    st.pyplot(fig)
 
 
 # DISPLAY METRICS
 
-metric_res = keras.metrics.mean_absolute_error(x_valid, naive_forecast).numpy()
+metric_res = keras.metrics.mean_absolute_error(x_valid, forecast).numpy()
 
 """
          ## Metrics

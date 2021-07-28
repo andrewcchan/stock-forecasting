@@ -31,3 +31,11 @@ def seasonality(time, period, amplitude=1, phase=0):
 def white_noise(time, noise_level=1, seed=None):
     rnd = np.random.RandomState(seed)
     return rnd.randn(len(time)) * noise_level
+
+def moving_average_forecast(series, window_size):
+  """Forecasts the mean of the last few values.
+     If window_size=1, then this is equivalent to naive forecast
+     This implementation is *much* faster than the previous one"""
+  mov = np.cumsum(series)
+  mov[window_size:] = mov[window_size:] - mov[:-window_size]
+  return mov[window_size - 1:-1] / window_size
