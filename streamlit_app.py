@@ -26,6 +26,12 @@ option_fore = st.selectbox(
 
 st.write('You selected:', option_fore)
 
+option_window_size = st.slider(
+    'Select Window Averaging Size',
+    365*2, 365))
+
+st.write('You selected:', option_window_size)
+
 st.write('## Tune Hyperparameters')
 
 st.write('## Graph')
@@ -121,7 +127,8 @@ metric_res = keras.metrics.mean_absolute_error(x_valid, forecast).numpy()
          Compare metrics between different forecasting methods
 """
 
-st.write(f'For selected option: `{option_fore}` MAE is ', metric_res)
+st.write(f'Selected option: `{option_fore}`'
+st.write('MAE is ', metric_res)
 
 d = {'Metric Name':[],'Mean Absolute Error':[]}
 df = pd.DataFrame(data = d)
