@@ -127,7 +127,7 @@ metric_res = keras.metrics.mean_absolute_error(x_valid, forecast).numpy()
          Compare metrics between different forecasting methods
 """
 
-st.write(f'Selected option: `{option_fore}`'
+st.write(f'Selected option: `{option_fore}`')
 st.write('MAE is ', metric_res)
 
 d = {'Metric Name':[],'Mean Absolute Error':[]}
