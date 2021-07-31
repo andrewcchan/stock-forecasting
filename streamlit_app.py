@@ -15,7 +15,10 @@ keras = tf.keras
 st.title('Stock Forecasting')
 tic_option = st.selectbox(
     'Select Ticker Symbol',
-    ('GOOG','AAPL'))
+    ('GOOG','AAPL','MSFT'))
+
+st.write('You selected:', tic_option)
+
 
 option_fore = st.selectbox(
     'Select Forcasting Algorithm',
@@ -40,8 +43,10 @@ def run_query(query):
     return rows
 if tic_option == 'GOOG':
     sheet_url = st.secrets["gsheets_url_goog"]
-else:
+else tic_option == 'AAPL':
     sheet_url = st.secrets["gsheets_url_aapl"]
+else:
+    sheet_url = st.secrets["gsheets_url_msft"]
 
 rows = run_query(f'SELECT * FROM "{sheet_url}"')
 
