@@ -63,7 +63,7 @@ for row in rows:
   prices.append(row.Close)
 
 
-split_time = option_window_size*3-367
+split_time = option_window_size*3-option_window_size
 time_train = dates[:split_time]
 x_train = prices[:split_time]
 time_valid = dates[split_time:]
@@ -77,7 +77,7 @@ if option_fore == 'Naive':
     # PLOT
     fig = plt.figure(figsize=(10, 6))
     plt.plot(time_valid[0:option_window_size], x_valid[0:option_window_size], label='Series')
-    plt.plot(time_valid[1:366], naive_forecast[1:366], label='Forecast')
+    plt.plot(time_valid[1:option_window_size+1], naive_forecast[1:option_window_size+1], label='Forecast')
     plt.legend(fontsize=14)
     plt.xlabel("Date")
     plt.ylabel("Closing Price")
@@ -103,7 +103,7 @@ elif option_fore == 'Difference_Moving_Average':
     # PLOT
     fig = plt.figure(figsize=(10, 6))
     plt.plot(time_valid[0:option_window_size], x_valid[0:option_window_size], label='Series')
-    plt.plot(time_valid[1:366], forecast[1:366], label='Forecast')
+    plt.plot(time_valid[1:option_window_size+1], forecast[1:option_window_size+1], label='Forecast')
     plt.legend(fontsize=14)
     plt.xlabel("Date")
     plt.ylabel("Closing Price")
