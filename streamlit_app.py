@@ -43,7 +43,7 @@ def run_query(query):
     return rows
 if tic_option == 'GOOG':
     sheet_url = st.secrets["gsheets_url_goog"]
-else tic_option == 'AAPL':
+elif tic_option == 'AAPL':
     sheet_url = st.secrets["gsheets_url_aapl"]
 else:
     sheet_url = st.secrets["gsheets_url_msft"]
