@@ -28,7 +28,7 @@ st.write('You selected:', option_fore)
 
 option_window_size = st.slider(
     'Select Window Averaging Size',
-    365*2, 365))
+    365*2, 365)
 
 st.write('You selected:', option_window_size)
 
